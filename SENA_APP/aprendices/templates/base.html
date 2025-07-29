@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SENA APP{% endblock %}</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta de colores azul cielo y grises */
+            --sky-blue-50: #f0f9ff;
+            --sky-blue-100: #e0f2fe;
+            --sky-blue-200: #bae6fd;
+            --sky-blue-300: #7dd3fc;
+            --sky-blue-400: #38bdf8;
+            --sky-blue-500: #0ea5e9;
+            --sky-blue-600: #0284c7;
+            --sky-blue-700: #0369a1;
+            --sky-blue-800: #075985;
+            --sky-blue-900: #0c4a6e;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--sky-blue-50) 0%, var(--gray-100) 100%);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navbar mejorada */
+        .navbar {
+            background: linear-gradient(135deg, var(--sky-blue-600) 0%, var(--sky-blue-700) 100%);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: translateY(-2px);
+            color: var(--sky-blue-100) !important;
+        }
+
+        .navbar-brand img {
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem !important;
+            border-radius: 25px;
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            left: 100%;
+        }
+
+        /* Jumbotron renovado */
+        .jumbotron {
+            background: linear-gradient(135deg, var(--sky-blue-500) 0%, var(--sky-blue-600) 50%, var(--sky-blue-700) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .jumbotron::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .jumbotron h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .jumbotron p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        /* Cards mejoradas */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--sky-blue-400), var(--sky-blue-600));
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--sky-blue-50) 100%);
+            border-bottom: 1px solid var(--sky-blue-200);
+            font-weight: 600;
+            color: var(--sky-blue-800);
+            padding: 1.25rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Tablas mejoradas */
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, var(--sky-blue-600) 0%, var(--sky-blue-700) 100%);
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-color: var(--sky-blue-100);
+            vertical-align: middle;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background: linear-gradient(135deg, var(--sky-blue-25) 0%, var(--gray-50) 100%);
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background: var(--sky-blue-100);
+            transform: scale(1.01);
+        }
+
+        /* Footer mejorado */
+        footer {
+            background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+            color: var(--gray-300);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sky-blue-400), var(--sky-blue-600));
+        }
+
+        footer p {
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Badges mejorados */
+        .badge {
+            background: linear-gradient(135deg, var(--sky-blue-500) 0%, var(--sky-blue-600) 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Botones mejorados */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sky-blue-500) 0%, var(--sky-blue-600) 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background: linear-gradient(135deg, var(--sky-blue-600) 0%, var(--sky-blue-700) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--gray-500) 0%, var(--gray-600) 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover, .btn-secondary:focus {
+            background: linear-gradient(135deg, var(--gray-600) 0%, var(--gray-700) 100%);
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor principal */
+        main {
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Animaciones sutiles */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .jumbotron, .table {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Responsive mejoras */
+        @media (max-width: 768px) {
+            .jumbotron {
+                padding: 2rem 1rem;
+            }
+            
+            .jumbotron h1 {
+                font-size: 2rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+            
+            .card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Efectos de glassmorphism para elementos especiales */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* Hover effects mejorados */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'aprendices:inicio' %}">
+                <img width="50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX6Gat1r36ATdBS7sTqqFH8TvIVPMkqsdLgw&s" alt="Logo Sena">
+                <strong>SENA APP</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border: none;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">
+                            <i class="fas fa-home me-2"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
+                            <i class="fas fa-users me-2"></i>Aprendices
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">
+                            <i class="fas fa-cog me-2"></i>Panel Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        {% block content %}
+        <!-- Ejemplo de contenido para mostrar el diseño -->
+        <div class="jumbotron text-center">
+            <h1 class="display-4">
+                <i class="fas fa-graduation-cap me-3"></i>
+                Bienvenido a SENA APP
+            </h1>
+            <p class="lead">Sistema de Gestión de Aprendices - Tecnología al servicio de la educación</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card hover-lift">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line me-2"></i>
+                        Estadísticas
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Panel de Control</h5>
+                        <p class="card-text">Visualiza métricas importantes y estadísticas del sistema.</p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-eye me-2"></i>Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card hover-lift">
+                    <div class="card-header">
+                        <i class="fas fa-user-graduate me-2"></i>
+                        Aprendices
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Estudiantes</h5>
+                        <p class="card-text">Administra la información de los aprendices registrados.</p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-users me-2"></i>Gestionar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card hover-lift">
+                    <div class="card-header">
+                        <i class="fas fa-book me-2"></i>
+                        Recursos
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Material de Estudio</h5>
+                        <p class="card-text">Accede a recursos educativos y material de apoyo.</p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-download me-2"></i>Descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejemplo de tabla -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-table me-2"></i>
+                Lista de Aprendices
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>Juan Pérez</td>
+                            <td>juan@example.com</td>
+                            <td><span class="badge">Activo</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-1">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>María González</td>
+                            <td>maria@example.com</td>
+                            <td><span class="badge">Activo</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-1">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>
+                <i class="fas fa-copyright me-2"></i>
+                2025 SENA APP - Sistema de Gestión de Aprendices
+            </p>
+            <p class="mt-2" style="font-size: 0.875rem; opacity: 0.8;">
+                Desarrollado con <i class="fas fa-heart text-danger"></i> para la educación
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animación suave al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.card, .jumbotron, .table');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Efecto parallax sutil en el jumbotron
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const jumbotron = document.querySelector('.jumbotron');
+            if (jumbotron) {
+                jumbotron.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
