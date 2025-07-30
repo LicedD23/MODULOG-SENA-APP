@@ -19,7 +19,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path('',include('aprendices.urls')),
+    path('',include('instructores.urls')),
     path('admin/', admin.site.urls),
+    
 ]
 admin.site.site_header ="Panel Administrativo"
 admin.site.site_title = "SENA APP"

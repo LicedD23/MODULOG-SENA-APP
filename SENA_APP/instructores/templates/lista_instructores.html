@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Aprendices - SENA</title>
+    <title>Lista de Instructores - SENA</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -70,8 +70,6 @@
             margin-top: 10px;
             border-left: 5px solid #d32f2f; /* Borde izquierdo */
         }
-        
-
         .nav-item {
             color: white !important;
             font-weight: 500;
@@ -112,9 +110,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>SENA - Sistema de Gestión de Aprendices</h1>
-        <p>Lista de Todos los Aprendices</p>
-        
+        <h1>SENA - Sistema de Gestión de Instructores</h1>
+        <p>Lista de Todos los Instructores</p>
         <li class="nav-item">
                         <a class="nav-link" href="{% url 'aprendices:inicio' %}">
                             <i class="fas fa-home me-2"></i>Inicio
@@ -136,44 +133,51 @@
                         </a>
                     </li>
     </div>
-   
+
     <div class="container">
         <div class="stats">
             <h3>Estadísticas</h3>
-            <p><strong>Total de Aprendices Registrados:</strong> {{ total_aprendices }}</p>
+            <p><strong>Total de Instructores Registrados:</strong> {{ total_instructores }}</p>
         </div>
-       
-        {% if lista_aprendices %}
+
+        {% if lista_instructores %}
             <table>
                 <thead>
                     <tr>
                         <th>Documento</th>
+                        <th>Tipo Documento</th>
                         <th>Nombre Completo</th>
-                        <th>Teléfono</th>
                         <th>Correo</th>
-                        <th>Fecha Nacimiento</th>
+                        <th>Teléfono</th>
                         <th>Ciudad</th>
-                        <th>Programa</th>
+                        <th>Dirección</th>
+                        <th>Nivel Educativo</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Especialidad</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for aprendiz in lista_aprendices %}
+                    {% for Instructor in lista_instructores %}
                     <tr>
-                        <td>{{ aprendiz.documento_identidad }}</td>
-                        <td>{{ aprendiz.nombre }} {{ aprendiz.apellido }}</td>
-                        <td>{{ aprendiz.telefono }}</td>
-                        <td>{{ aprendiz.correo }}</td>
-                        <td>{{ aprendiz.fecha_nacimiento }}</td>
-                        <td>{{ aprendiz.ciudad }}</td>
-                        <td>{{ aprendiz.programa }}</td>
-                    </tr>
+                        <td>{{ Instructor.documento_identidad }}</td>
+                        <td>{{ Instructor.tipo_documento }}</td>
+                        <td>{{ Instructor.nombre }} {{ Instructor.apellido }}</td>
 
+                        <td><a href="mailto:{{ Instructor.correo }}">{{ Instructor.correo }}</a></td>
+                        <td>{{ Instructor.telefono }}</td>
+                        <td>{{ Instructor.ciudad }}</td>
+                        <td>{{ Instructor.direccion }}</td>
+                        <td>{{ Instructor.nivel_educativo }}</td>
+                        <td>{{ Instructor.fecha_nacimiento }}</td>
+                        <td>{{ Instructor.especialidad }}</td>
+                        
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
             <div class="alert">
-                <p>No hay aprendices registrados en el sistema.</p>
+                <p>No hay Instructores registrados en el sistema.</p>
             </div>
         {% endif %}
     </div>

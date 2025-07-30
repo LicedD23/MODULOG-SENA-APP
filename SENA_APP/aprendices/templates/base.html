@@ -49,7 +49,7 @@
             min-height: 100vh;
         }
 
-        /* Navbar mejorada */
+
         .navbar {
             background: linear-gradient(135deg, var(--sky-blue-600) 0%, var(--sky-blue-700) 100%);
             backdrop-filter: blur(10px);
@@ -377,6 +377,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
                             <i class="fas fa-users me-2"></i>Aprendices
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
+                            <i class="fas fa-users me-2"></i>Instructores
                         </a>
                     </li>
                     <li class="nav-item">
