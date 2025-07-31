@@ -9,11 +9,11 @@
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #f0f4f8, #d9e4f5); /* Degradado suave */
+            background: linear-gradient(135deg, #f0f4f8, #d9e4f5);
             color: #333;
         }
         .header {
-            background-color: #607d8b; /* Gris */
+            background-color: #607d8b;
             color: white;
             padding: 30px;
             text-align: center;
@@ -29,14 +29,14 @@
             transition: transform 0.3s;
         }
         .container:hover {
-            transform: scale(1.02); /* Aumentar al pasar el ratón */
+            transform: scale(1.02);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             border-radius: 10px;
-            overflow: hidden; /* Bordes redondeados en la tabla */
+            overflow: hidden;
         }
         th, td {
             border: 1px solid #ddd;
@@ -44,18 +44,18 @@
             text-align: left;
         }
         th {
-            background-color: #607d8b; /* Gris para encabezados */
+            background-color: #607d8b;
             color: white;
-            text-transform: uppercase; /* Texto en mayúsculas */
+            text-transform: uppercase;
         }
         tr:nth-child(even) {
-            background-color: #f9f9f9; /* Fondo claro para filas pares */
+            background-color: #f9f9f9;
         }
         tr:hover {
-            background-color: #cfd8dc; /* Fondo gris claro al pasar el ratón */
+            background-color: #cfd8dc;
         }
         .stats {
-            background-color: #e1f5fe; /* Azul suave */
+            background-color: #e1f5fe;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -63,26 +63,29 @@
             font-weight: bold;
         }
         .alert {
-            background-color: #ffebee; /* Color de alerta */
+            background-color: #ffebee;
             color: #d32f2f;
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
-            border-left: 5px solid #d32f2f; /* Borde izquierdo */
+            border-left: 5px solid #d32f2f;
+        }
+        .nav-item1 {
+            display: flex; /* Cambiado a flex */
+            justify-content: center; /* Centrar elementos en la fila */
+            gap: 12px;
+            margin: 20px 0; /* Espacio alrededor de la barra de navegación */
         }
         .nav-item {
             color: white !important;
             font-weight: 500;
-            font-size: 1.0rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex-direction: column;
             transition: all 0.3s ease;
-            justify-content_content: space-around;
         }
-
         .nav-link {
+            white-space: nowrap;
             color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 500;
             padding: 0.75rem 1.25rem !important;
@@ -92,52 +95,79 @@
             position: relative;
             overflow: hidden;
             text-decoration: none;
-            
         }
-
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
         }
-
         .nav-link i {
             margin-right: 8px;
             font-size: 16px;
         }
+        .btn-group{
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .btn {
+        
+        background-color:#4CAF50;
+        color: white; 
+        padding: 10px 20px; 
+        text-align: center;
+        text-decoration: none; 
+        display:flex;
+        justify-content:flex-start;
+        border-radius: 5px; 
+        transition: background-color 0.3s; 
+    
+        }
+
+        .btn:hover {
+        background-color: #4ec7e6ff; 
+        }
+
+
     </style>
 </head>
 <body>
     <div class="header">
         <h1>SENA - Sistema de Gestión de Instructores</h1>
         <p>Lista de Todos los Instructores</p>
-        <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">
-                            <i class="fas fa-home me-2"></i>Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
-                            <i class="fas fa-users me-2"></i>Aprendices
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
-                            <i class="fas fa-users me-2"></i>Instructores
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">
-                            <i class="fas fa-cog me-2"></i>Panel Admin
-                        </a>
-                    </li>
+        <div class="nav-item1">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'aprendices:inicio' %}">
+                    <i class="fas fa-home me-2"></i>Inicio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
+                    <i class="fas fa-users me-2"></i>Aprendices
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
+                    <i class="fas fa-users me-2"></i>Instructores
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">
+                    <i class="fas fa-cog me-2"></i>Panel Admin
+                </a>
+            </li>
+        </div>
     </div>
 
     <div class="container">
         <div class="stats">
             <h3>Estadísticas</h3>
             <p><strong>Total de Instructores Registrados:</strong> {{ total_instructores }}</p>
+            <div class= "btn-group"> 
+                <a class= "btn btn-success ms-2" href="{% url 'admin:instructores_instructor_add' %}">
+                    Nuevo Instructor
+                </a>
+            </div>
         </div>
 
         {% if lista_instructores %}
@@ -162,7 +192,6 @@
                         <td>{{ Instructor.documento_identidad }}</td>
                         <td>{{ Instructor.tipo_documento }}</td>
                         <td>{{ Instructor.nombre }} {{ Instructor.apellido }}</td>
-
                         <td><a href="mailto:{{ Instructor.correo }}">{{ Instructor.correo }}</a></td>
                         <td>{{ Instructor.telefono }}</td>
                         <td>{{ Instructor.ciudad }}</td>
@@ -170,7 +199,6 @@
                         <td>{{ Instructor.nivel_educativo }}</td>
                         <td>{{ Instructor.fecha_nacimiento }}</td>
                         <td>{{ Instructor.especialidad }}</td>
-                        
                     </tr>
                     {% endfor %}
                 </tbody>

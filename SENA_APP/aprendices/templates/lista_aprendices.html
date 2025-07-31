@@ -71,20 +71,22 @@
             border-left: 5px solid #d32f2f; /* Borde izquierdo */
         }
         
-
+        .nav-item1 {
+            display: flex; /* Cambiado a flex */
+            justify-content: center; /* Centrar elementos en la fila */
+            gap: 12px;
+            margin: 20px 0; /* Espacio alrededor de la barra de navegación */
+        }
         .nav-item {
             color: white !important;
             font-weight: 500;
-            font-size: 1.0rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex-direction: column;
             transition: all 0.3s ease;
-            justify-content_content: space-around;
         }
-
         .nav-link {
+            white-space: nowrap;
             color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 500;
             padding: 0.75rem 1.25rem !important;
@@ -94,19 +96,37 @@
             position: relative;
             overflow: hidden;
             text-decoration: none;
-            
         }
-
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
         }
-
         .nav-link i {
             margin-right: 8px;
             font-size: 16px;
+        }
+        .btn-group{
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .btn {
+        
+        background-color:#4CAF50;
+        color: white; 
+        padding: 10px 20px; 
+        text-align: center;
+        text-decoration: none; 
+        display:flex;
+        justify-content:flex-start;
+        border-radius: 5px; 
+        transition: background-color 0.3s; 
+    
+        }
+
+        .btn:hover {
+        background-color: #4ec7e6ff; 
         }
     </style>
 </head>
@@ -115,6 +135,7 @@
         <h1>SENA - Sistema de Gestión de Aprendices</h1>
         <p>Lista de Todos los Aprendices</p>
         
+        <div class="nav-item1">
         <li class="nav-item">
                         <a class="nav-link" href="{% url 'aprendices:inicio' %}">
                             <i class="fas fa-home me-2"></i>Inicio
@@ -135,12 +156,18 @@
                             <i class="fas fa-cog me-2"></i>Panel Admin
                         </a>
                     </li>
+        </div>
     </div>
    
     <div class="container">
         <div class="stats">
             <h3>Estadísticas</h3>
             <p><strong>Total de Aprendices Registrados:</strong> {{ total_aprendices }}</p>
+            <div class="btn-group">
+                <a href="{% url 'admin:aprendices_aprendiz_add' %}" class="btn btn-success ms-2">
+                    Nuevo Aprendiz
+                </a>
+            </div>
         </div>
        
         {% if lista_aprendices %}
