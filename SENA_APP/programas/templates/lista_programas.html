@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Instructores - SENA</title>
+    <title>Lista de Programas- SENA</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -133,8 +133,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>SENA - Sistema de Gestión de Instructores</h1>
-        <p>Lista de Todos los Instructores</p>
+        <h1>SENA - Sistema de Gestión de Programas</h1>
+        <p>Lista de Todos los Programas</p>
         <div class="nav-item1">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'aprendices:inicio' %}">
@@ -167,50 +167,47 @@
     <div class="container">
         <div class="stats">
             <h3>Estadísticas</h3>
-            <p><strong>Total de Instructores Registrados:</strong> {{ total_instructores }}</p>
+            <p><strong>Total de Programas Registrados:</strong> {{ total_programas }}</p>
             <div class= "btn-group"> 
-                <a class= "btn btn-success ms-2" href="{% url 'admin:instructores_instructor_add' %}">
-                    Nuevo Instructor
+                <a class= "btn btn-success ms-2" href="{% url 'admin:programas_programa_add' %}">
+                    Nuevo Programa
                 </a>
             </div>
         </div>
 
-        {% if lista_instructores %}
+        {% if lista_programas %}
             <table>
                 <thead>
                     <tr>
-                        <th>Documento</th>
-                        <th>Tipo Documento</th>
-                        <th>Nombre Completo</th>
-                        <th>Correo</th>
-                        <th>Teléfono</th>
-                        <th>Ciudad</th>
-                        <th>Dirección</th>
-                        <th>Nivel Educativo</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Especialidad</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Nivel Formación</th>
+                        <th>Modalidad</th>
+                        <th>Meses</th>
+                        <th>Descripcion</th>
+                        <th>Centro Formación</th>
+                        <th>Regional</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    {% for Instructor in lista_instructores %}
+                    {% for programa in lista_programas %}
                     <tr>
-                        <td>{{ Instructor.documento_identidad }}</td>
-                        <td>{{ Instructor.tipo_documento }}</td>
-                        <td>{{ Instructor.nombre }} {{ Instructor.apellido }}</td>
-                        <td><a href="mailto:{{ Instructor.correo }}">{{ Instructor.correo }}</a></td>
-                        <td>{{ Instructor.telefono }}</td>
-                        <td>{{ Instructor.ciudad }}</td>
-                        <td>{{ Instructor.direccion }}</td>
-                        <td>{{ Instructor.nivel_educativo }}</td>
-                        <td>{{ Instructor.fecha_nacimiento }}</td>
-                        <td>{{ Instructor.especialidad }}</td>
-                    </tr>
+                        <td>{{ programa.codigo }}</td>
+                        <td>{{ programa.nombre }}</td>
+                        <td>{{ programa.nivel_formacion }}</td>
+                        <td>{{ programa.modalidad }}</td>
+                        <td>{{ programa.duracion_meses }}</td>
+                        <td>{{ programa.descripcion }}</td>
+                        <td>{{ programa.centro_formacion }}</td>
+                        <td>{{ programa.regional }}</td>
+                        
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
             <div class="alert">
-                <p>No hay Instructores registrados en el sistema.</p>
+                <p>No hay Programas registrados en el sistema.</p>
             </div>
         {% endif %}
     </div>
