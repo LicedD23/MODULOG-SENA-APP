@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cursos - SENA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sena-primary: #2563eb;
+            --sena-secondary: #475569;
+            --sena-light: #f1f5f9;
+            --sena-dark: #1e293b;
+            --sena-accent: #3b82f6;
+            --sena-success: #059669;
+            --sena-gradient: linear-gradient(135deg, #2563eb 0%, #475569 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+
+        body {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--sena-dark);
+            min-height: 100vh;
+        }
+
+
+        .header {
+            background: var(--sena-gradient);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="30" cy="30" r="4"/></g></svg>') repeat;
+            opacity: 0.3;
+        }
+
+
+        .header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+
+        .nav-item {
+            list-style: none;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+
+        .nav-link {
+            color: white !important;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: white !important;
+        }
+
+
+        .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            background: white;
+            overflow: hidden;
+        }
+
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+
+        .card-header {
+            background: var(--sena-gradient);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            font-weight: 600;
+        }
+
+
+        .card-header h4,
+        .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+
+        .card-body {
+            padding: 2rem;
+        }
+
+
+        .badge-sena {
+            background: var(--sena-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+
+        .badge-custom {
+            background: var(--sena-success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+        }
+
+
+        .info-card {
+            background: var(--sena-light);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+
+        .info-card:hover {
+            border-color: var(--sena-accent);
+            transform: scale(1.02);
+        }
+
+
+        .info-card i {
+            color: var(--sena-accent);
+            margin-bottom: 1rem;
+        }
+
+
+        .list-group-item {
+            border: none;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0 !important;
+            transition: all 0.3s ease;
+        }
+
+
+        .list-group-item:hover {
+            background: var(--sena-light);
+            padding-left: 1rem;
+            border-radius: 0.5rem;
+        }
+
+
+        .list-group-item h6 {
+            color: var(--sena-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+
+        .btn-outline-success {
+            border-color: var(--sena-success);
+            color: var(--sena-success);
+            transition: all 0.3s ease;
+        }
+
+
+        .btn-outline-success:hover {
+            background: var(--sena-success);
+            border-color: var(--sena-success);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+
+        .course-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+
+        .course-info-item {
+            background: var(--sena-light);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--sena-accent);
+            transition: all 0.3s ease;
+        }
+
+
+        .course-info-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+
+        .course-info-item strong {
+            color: var(--sena-secondary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+
+        .stats-badge {
+            background: white;
+            color: var(--sena-accent);
+            border: 2px solid var(--sena-accent);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+        }
+
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+
+        .course-title {
+            color: var(--sena-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+
+        .observaciones-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-left: 4px solid var(--sena-accent);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+           
+            .nav-item {
+                display: block;
+                margin: 0.25rem 0;
+            }
+           
+            .nav-link {
+                justify-content: center;
+            }
+           
+            .course-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="text-center">
+                <h1><i class="fas fa-graduation-cap me-3"></i>SENA - Sistema de Gestión de Cursos</h1>
+                <p><i class="fas fa-list me-2"></i>Lista de Todos los Cursos</p>
+            </div>
+           
+            <div class="nav-container">
+                <ul class="d-flex flex-wrap justify-content-center align-items-center m-0 p-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">
+                            <i class="fas fa-home me-2"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
+                            <i class="fas fa-users me-2"></i>Aprendices
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
+                            <i class="fas fa-chalkboard-teacher me-2"></i>Instructores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:lista_cursos' %}">
+                            <i class="fas fa-book me-2"></i>Cursos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'programas:lista_programas' %}">
+                            <i class="fas fa-project-diagram me-2"></i>Programas de Formación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">
+                            <i class="fas fa-cog me-2"></i>Panel Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-container">
+        <!-- Información del Curso -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-book-fill me-2"></i>
+                        <h4 class="mb-0">Información del Curso</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h2 class="course-title">{{ curso.nombre }}</h2>
+                               
+                                <div class="course-info-grid">
+                                    <div class="course-info-item">
+                                        <strong><i class="bi bi-diagram-3 me-2"></i>Programa:</strong>
+                                        <span class="badge-sena">{{ curso.programa }}</span>
+                                    </div>
+                                    <div class="course-info-item">
+                                        <strong><i class="bi bi-hash me-2"></i>Código:</strong>
+                                        <span class="badge-sena">{{ curso.codigo }}</span>
+                                    </div>
+                                    <div class="course-info-item">
+                                        <strong><i class="bi bi-check-circle me-2"></i>Estado:</strong>
+                                        <span class="badge-custom">{{ curso.estado }}</span>
+                                    </div>
+                                    <div class="course-info-item">
+                                        <strong><i class="bi bi-geo-alt me-2"></i>Ambiente:</strong>
+                                        <span class="badge-custom">{{ curso.aula }}</span>
+                                    </div>
+                                </div>
+                               
+                                {% if curso.observaciones %}
+                                <div class="observaciones-card">
+                                    <h6><i class="bi bi-info-circle me-2"></i>Observaciones:</h6>
+                                    <p class="mb-0">{{ curso.observaciones }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                           
+                            <div class="col-lg-4">
+                                <div class="info-card mb-3">
+                                    <i class="bi bi-clock-fill" style="font-size: 3rem;"></i>
+                                    <h6 class="mt-2"><strong>Horario:</strong><br>{{ curso.horario }}</h6>
+                                </div>
+                               
+                                <div class="info-card">
+                                    <i class="bi bi-calendar-check-fill" style="font-size: 3rem;"></i>
+                                    <h6 class="mt-2"><strong>Fecha Inicio:</strong><br>{{ curso.fecha_inicio }}</h6>
+                                    <h6 class="mt-2"><strong>Fecha Finalización:</strong><br>{{ curso.fecha_fin }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- Card de Aprendices -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-people-fill me-2"></i>
+                            <h5 class="mb-0">Aprendices Registrados</h5>
+                        </div>
+                        <span class="stats-badge">{{ aprendices_curso|length }} estudiantes</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            {% for aprendiz in aprendices_curso %}
+                            <div class="list-group-item d-flex align-items-center px-0">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ aprendiz }}</h6>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if aprendices_curso %}
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Lista completa de aprendices</small>
+                            <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-eye me-1"></i>Ver Todos
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <!-- Card de Instructores -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-workspace me-2"></i>
+                            <h5 class="mb-0">Instructores del Curso</h5>
+                        </div>
+                        <span class="stats-badge">{{ instructores_curso|length }} instructores</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            {% for instructor in instructores_curso %}
+                            <div class="list-group-item d-flex align-items-center px-0">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ instructor }}</h6>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if instructores_curso %}
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Lista completa de instructores</small>
+                            <a href="{% url 'instructores:lista_instructores' %}" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-eye me-1"></i>Ver Todos
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
