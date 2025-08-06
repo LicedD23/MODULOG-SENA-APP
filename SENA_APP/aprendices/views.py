@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def aprendices(request):
-    lista_aprendices = Aprendiz.objects.all().order_by('apellido', 'nombre')
+    lista_aprendices = Aprendiz.objects.prefetch_related('cursos').all().order_by('apellido', 'nombre')
     template = loader.get_template('lista_aprendices.html')
     
     context = {

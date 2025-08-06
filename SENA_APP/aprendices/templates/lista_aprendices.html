@@ -186,6 +186,7 @@
                         <th>Fecha Nacimiento</th>
                         <th>Ciudad</th>
                         <th>Programa</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -197,7 +198,17 @@
                         <td>{{ aprendiz.correo }}</td>
                         <td>{{ aprendiz.fecha_nacimiento }}</td>
                         <td>{{ aprendiz.ciudad }}</td>
-                        <td>{{ aprendiz.programa }}</td>
+                        <td>  {% for curso in aprendiz.cursos.all %}
+                {{ curso.nombre }}
+                {% if not forloop.last %}<br>{% endif %}
+            {% empty %}
+                <small>Sin cursos</small>
+            {% endfor %}</td>
+            <td>
+                            <a href="{% url 'admin:aprendices_aprendiz_change' aprendiz.pk %}" class="btn btn-success ms-2">
+                                Editar
+                            </a>
+                        </td>
                     </tr>
 
                     {% endfor %}

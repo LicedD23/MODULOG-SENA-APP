@@ -189,6 +189,7 @@
                         <th>Nivel Educativo</th>
                         <th>Fecha Nacimiento</th>
                         <th>Especialidad</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,6 +205,9 @@
                         <td>{{ Instructor.nivel_educativo }}</td>
                         <td>{{ Instructor.fecha_nacimiento }}</td>
                         <td>{{ Instructor.especialidad }}</td>
+                        <td>
+                            <a href="{% url 'admin:instructores_instructor_change' Instructor.id %}" class="btn btn-success ms-2">Editar</a>
+                        </td> 
                     </tr>
                     {% endfor %}
                 </tbody>

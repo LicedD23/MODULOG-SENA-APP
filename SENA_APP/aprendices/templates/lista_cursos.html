@@ -196,6 +196,7 @@
                         <th>Fecha Finalizacion</th>
                         <th>Horario</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,7 +210,12 @@
                         <td>{{ curso.fecha_fin |date:"d/m/Y"  }}</td>
                         <td>{{ curso.horario }}</td>
                         <td>{{ curso.estado }}</td>
-                    
+                        <td>
+                            <a href="{% url 'admin:aprendices_curso_change' curso.pk %}" 
+                                class="btn btn-success ms-2">
+                                Editar
+                            </a>
+                        </td>
                     </tr>
 
 
