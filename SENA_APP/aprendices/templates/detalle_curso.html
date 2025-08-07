@@ -94,7 +94,7 @@
             color: white !important;
             text-decoration: none;
             padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem;
+            border-radius: 0.7rem;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -300,16 +300,16 @@
             .header h1 {
                 font-size: 1.8rem;
             }
-           
+    
             .nav-item {
                 display: block;
                 margin: 0.25rem 0;
             }
-           
+
             .nav-link {
                 justify-content: center;
             }
-           
+
             .course-info-grid {
                 grid-template-columns: 1fr;
             }
@@ -323,7 +323,7 @@
                 <h1><i class="fas fa-graduation-cap me-3"></i>SENA - Sistema de Gestión de Cursos</h1>
                 <p><i class="fas fa-list me-2"></i>Lista de Todos los Cursos</p>
             </div>
-           
+        
             <div class="nav-container">
                 <ul class="d-flex flex-wrap justify-content-center align-items-center m-0 p-0">
                     <li class="nav-item">
@@ -363,7 +363,7 @@
 
 
     <div class="main-container">
-        <!-- Información del Curso -->
+    
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card">
@@ -375,7 +375,7 @@
                         <div class="row">
                             <div class="col-lg-8">
                                 <h2 class="course-title">{{ curso.nombre }}</h2>
-                               
+                            
                                 <div class="course-info-grid">
                                     <div class="course-info-item">
                                         <strong><i class="bi bi-diagram-3 me-2"></i>Programa:</strong>
@@ -394,7 +394,7 @@
                                         <span class="badge-custom">{{ curso.aula }}</span>
                                     </div>
                                 </div>
-                               
+                            
                                 {% if curso.observaciones %}
                                 <div class="observaciones-card">
                                     <h6><i class="bi bi-info-circle me-2"></i>Observaciones:</h6>
@@ -402,7 +402,7 @@
                                 </div>
                                 {% endif %}
                             </div>
-                           
+                        
                             <div class="col-lg-4">
                                 <div class="info-card mb-3">
                                     <i class="bi bi-clock-fill" style="font-size: 3rem;"></i>

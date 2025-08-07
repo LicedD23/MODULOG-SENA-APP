@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Aprendiz - SENA APP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sena-primary: #2563eb;
+            --sena-secondary: #475569;
+            --sena-success: #28a745;
+            --sena-info: #17a2b8;
+            --sena-light: #f8f9fc;
+            --sena-dark: #1a1d29;
+            --sena-gradient:  linear-gradient(135deg, #2563eb 0%, #475569 100%);;
+        }
+
+        body {
+            background: var(--sena-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .sena-header {
+            background: var(--sena-gradient);
+            padding: 2rem 0;
+            color: white;
+            box-shadow: 0 4px 20px rgba(64, 81, 181, 0.3);
+        }
+
+        .sena-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .sena-title i {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+
+        .sena-title h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .sena-subtitle {
+            text-align: center;
+            opacity: 0.9;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .sena-nav {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(64, 81, 181, 0.1);
+            overflow: hidden;
+            margin: 2rem 0;
+            border: none;
+        }
+
+        .info-card-header {
+            background: var(--sena-gradient);
+            color: white;
+            padding: 1.5rem 2rem;
+            border: none;
+        }
+
+        .info-card-header h4 {
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-card-header i {
+            font-size: 1.5rem;
+        }
+
+        .info-card-body {
+            padding: 2rem;
+        }
+
+        .profile-visual {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1rem;
+        }
+
+        .profile-card {
+            position: relative;
+            background: white;
+            border-radius: 25px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 15px 35px rgba(64, 81, 181, 0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 280px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--sena-gradient);
+            border-radius: 25px;
+            z-index: -1;
+            margin: -3px;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(64, 81, 181, 0.25);
+        }
+
+        .profile-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            opacity: 0.08;
+        }
+
+        .pattern-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--sena-gradient);
+        }
+
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            top: -60px;
+            right: -60px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 80px;
+            height: 80px;
+            bottom: -40px;
+            left: -40px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .circle-3 {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: -30px;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .pattern-line {
+            position: absolute;
+            background: var(--sena-gradient);
+            border-radius: 10px;
+        }
+
+        .line-1 {
+            width: 100px;
+            height: 4px;
+            top: 30%;
+            right: -50px;
+            transform: rotate(-45deg);
+            animation: slide 10s ease-in-out infinite;
+        }
+
+        .line-2 {
+            width: 80px;
+            height: 3px;
+            bottom: 30%;
+            left: -40px;
+            transform: rotate(45deg);
+            animation: slide 12s ease-in-out infinite reverse;
+        }
+
+        .profile-icon {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-icon i {
+            font-size: 4rem;
+            background: var(--sena-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 8px rgba(64, 81, 181, 0.3));
+        }
+
+    
+        .profile-info {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-info h4 {
+            color: var(--sena-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .profile-badge {
+            background: linear-gradient(135deg, var(--sena-primary), var(--sena-secondary));
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(9, 119, 179, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(114, 127, 200, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes slide {
+            0%, 100% {
+                transform: translateX(0) rotate(-45deg);
+            }
+            50% {
+                transform: translateX(10px) rotate(-45deg);
+            }
+        }
+
+        .aprendiz-avatar {
+            display: none;
+        }
+
+        .aprendiz-name {
+            display: none;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, #f8f9fc 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--sena-primary);
+        }
+
+        .info-section h6 {
+            color: var(--sena-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-section h6 i {
+            font-size: 1.2rem;
+            color: var(--sena-secondary);
+        }
+
+        .info-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--sena-dark);
+            min-width: 150px;
+        }
+
+        .info-value {
+            color: #666;
+            flex: 1;
+        }
+
+        .info-value a {
+            color: var(--sena-primary);
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+
+        @media (max-width: 768px) {
+            .sena-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .sena-nav {
+                text-align: center;
+            }
+            
+            .nav-btn {
+                margin: 0.25rem;
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .info-card-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sena-header">
+        <div class="container">
+            <div class="sena-title">
+                <i class="bi bi-mortarboard-fill"></i>
+                <h1>SENA - Detalle Del Aprendiz</h1>
+            </div>
+            <div class="sena-subtitle">
+                <i class="bi bi-list-ul"> Aprendiz SENA</i>
+                
+            </div>
+            
+        
+            <div class="sena-nav text-center">
+                <a href="{% url 'aprendices:inicio' %}" class="nav-btn">
+                    <i class="bi bi-house-fill"></i> Inicio
+                </a>
+                <a href="{% url 'aprendices:lista_aprendices' %}" class="nav-btn">
+                    <i class="bi bi-people-fill"></i> Aprendices
+                </a>
+                <a href="{% url 'instructores:lista_instructores' %}" class="nav-btn">
+                    <i class="bi bi-person-workspace"></i> Instructores
+                </a>
+                <a href="{% url 'aprendices:lista_cursos' %}" class="nav-btn active">
+                    <i class="bi bi-journal-bookmark-fill"></i> Cursos
+                </a>
+                <a href="{% url 'programas:lista_programas' %}" class="nav-btn">
+                    <i class="bi bi-diagram-3-fill"></i> Programas de Formación
+                </a>
+                <a href="{% url 'admin:index' %}" class="nav-btn">
+                    <i class="bi bi-gear-fill"></i> Panel Admin
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card info-card">
+                    <div class="card-header info-card-header">
+                        <h4>
+                            <i class="bi bi-person-workspace"></i>
+                            Perfil del Aprendiz
+                        </h4>
+                    </div>
+                    <div class="card-body info-card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="profile-visual">
+                                    <div class="profile-card">
+                                        <div class="profile-pattern">
+                                            <div class="pattern-circle circle-1"></div>
+                                            <div class="pattern-circle circle-2"></div>
+                                            <div class="pattern-circle circle-3"></div>
+                                            <div class="pattern-line line-1"></div>
+                                            <div class="pattern-line line-2"></div>
+                                        </div>
+                                        <div class="profile-icon">
+                                            <i class="bi bi-person-badge"></i>
+                                        </div>
+                                        <div class="profile-info">
+                                            <h4>{{ aprendiz.nombre_completo }}</h4>
+                                            <div class="profile-badge">
+                                                <i class="bi bi-mortarboard-fill me-2"></i>
+                                                Aprendiz SENA
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="info-section">
+                                            <h6>
+                                                <i class="bi bi-card-text"></i>
+                                                Información Personal
+                                            </h6>
+                                                            <div class="info-item">
+                                                <span class="info-label">Documento:</span>
+                                                <span class="info-value">{{ aprendiz.documento_identidad }}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">Nombre:</span>
+                                                <span class="info-value">{{ aprendiz.nombre }}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">Apellido:</span>
+                                                <span class="info-value">{{ aprendiz.apellido }}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">Fecha Nacimiento:</span>
+                                                <span class="info-value">{{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="info-section">
+                                            <h6>
+                                                <i class="bi bi-envelope"></i>
+                                                Información de Contacto
+                                            </h6>
+                                                            <div class="info-item">
+                                                <span class="info-label">Correo:</span>
+                                                <span class="info-value">
+                                                    <a href="mailto:{{ aprendiz.correo }}">{{ aprendiz.correo }}</a>
+                                                </span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">Teléfono:</span>
+                                                <span class="info-value">{{ aprendiz.telefono }}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span class="info-label">Ciudad:</span>
+                                                <span class="info-value">{{ aprendiz.ciudad }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

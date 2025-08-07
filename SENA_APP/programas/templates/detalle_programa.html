@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Programa - SENA APP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sena-primary: #2563eb;
+            --sena-secondary: #475569;
+            --sena-success: #28a745;
+            --sena-info: #17a2b8;
+            --sena-light: #f8f9fc;
+            --sena-dark: #1a1d29;
+            --sena-gradient:  linear-gradient(135deg, #2563eb 0%, #475569 100%);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--sena-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--sena-dark);
+        }
+        .sena-header {
+            background: var(--sena-gradient);
+            padding: 2rem 0;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sena-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .sena-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sena-title i {
+            font-size: 3rem;
+            margin-right: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .sena-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .sena-subtitle {
+            text-align: center;
+            opacity: 0.95;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sena-nav {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .program-hero {
+            background: var(--sena-gradient);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-xl);
+            color: white;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .program-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .program-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .program-icon:hover {
+            transform: scale(1.1) rotateY(15deg);
+            box-shadow: 0 25px 60px rgba(255, 255, 255, 0.5);
+        }
+
+        .program-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .program-badges {
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge-modern {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-modern:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .program-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .program-info p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--sena-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--sena-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-right: 1rem;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--sena-dark);
+            margin: 0;
+        }
+
+        .card-content {
+            font-size: 1.1rem;
+            color: var(--sena-secondary);
+            line-height: 1.6;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--sena-primary);
+            margin: 0.5rem 0;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--sena-secondary);
+            font-weight: 500;
+        }
+        .courses-section {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 3rem;
+            border: 1px solid rgba(5, 150, 105, 0.1);
+        }
+
+        .courses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(5, 150, 105, 0.1);
+        }
+
+        .courses-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--sena-dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .courses-title-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--sena-success);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .course-count {
+            background: var(--sena-gradient);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--sena-gradient);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sena-primary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .course-code {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--sena-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-description {
+            color: var(--sena-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .course-date {
+            color: var(--sena-success);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 25px;
+            border: 2px dashed rgba(203, 213, 225, 0.5);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+        }
+
+        .empty-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--sena-dark);
+            margin-bottom: 1rem;
+        }
+
+        .empty-text {
+            color: var(--sena-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-add-course {
+            background: var(--sena-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-add-course:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            background: var(--sena-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+
+        .btn-action.secondary {
+            background: white;
+            color: var(--sena-primary);
+            border: 2px solid var(--sena-primary);
+        }
+
+        .btn-action.secondary:hover {
+            background: var(--sena-primary);
+            color: white;
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .sena-title h1 {
+                font-size: 2rem;
+            }
+
+            .sena-title i {
+                font-size: 2.5rem;
+            }
+
+            .program-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .program-title {
+                font-size: 2.2rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .sena-nav {
+                padding: 0.75rem;
+                gap: 0.3rem;
+            }
+
+            .nav-btn {
+                font-size: 0.8rem;
+                padding: 0.6rem 1rem;
+                flex-shrink: 0;
+            }
+
+            .program-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .courses-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+        @media (max-width: 480px) {
+            .program-hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .courses-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .course-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sena-header">
+        <div class="container">
+            <div class="sena-title">
+                <i class="bi bi-mortarboard-fill"></i>
+                <h1>SENA - Detalle Del Programa</h1>
+            </div>
+            <div class="sena-subtitle">
+                <i class="bi bi-diagram-3-fill"></i>
+                Sistema de Gestión de Programas de Formación
+            </div>
+            
+            <div class="sena-nav">
+                <a href="{% url 'aprendices:inicio' %}" class="nav-btn">
+                    <i class="bi bi-house-fill"></i> Inicio
+                </a>
+                <a href="{% url 'aprendices:lista_aprendices' %}" class="nav-btn">
+                    <i class="bi bi-people-fill"></i> Aprendices
+                </a>
+                <a href="{% url 'instructores:lista_instructores' %}" class="nav-btn">
+                    <i class="bi bi-person-workspace"></i> Instructores
+                </a>
+                <a href="{% url 'aprendices:lista_cursos' %}" class="nav-btn active">
+                    <i class="bi bi-journal-bookmark-fill"></i> Cursos
+                </a>
+                <a href="{% url 'programas:lista_programas' %}" class="nav-btn">
+                    <i class="bi bi-diagram-3-fill"></i> Programas de Formación
+                </a>
+                <a href="{% url 'admin:index' %}" class="nav-btn">
+                    <i class="bi bi-gear-fill"></i> Panel Admin
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+
+            <div class="program-hero">
+                <div class="program-icon">
+                    <i class="bi bi-diagram-3"></i>
+                </div>
+                <h1 class="program-title">{{ programa.nombre }}</h1>
+                
+                <div class="program-badges">
+                    <div class="badge-modern">
+                        <i class="bi bi-hash"></i> {{ programa.codigo }}
+                    </div>
+                    <div class="badge-modern">
+                        <i class="bi bi-award"></i> {{ programa.get_nivel_formacion_display }}
+                    </div>
+                    <div class="badge-modern">
+                        <i class="bi bi-laptop"></i> {{ programa.get_modalidad_display }}
+                    </div>
+                </div>
+
+                <div class="program-info">
+                    <p><i class="bi bi-geo-alt"></i><strong>Centro de Formación:</strong> {{ programa.centro_formacion }}</p>
+                    {% if programa.regional %}
+                    <p><i class="bi bi-map"></i><strong>Regional:</strong> {{ programa.regional }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="cards-container">
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-calendar-range"></i>
+                        </div>
+                        <h3 class="card-title">Duración del Programa</h3>
+                    </div>
+                    <div class="card-value">{{ programa.duracion_meses }}</div>
+                    <div class="card-subtitle">meses de formación</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h3 class="card-title">Intensidad Horaria</h3>
+                    </div>
+                    <div class="card-value">{{ programa.duracion_horas }}</div>
+                    <div class="card-subtitle">horas académicas</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h3 class="card-title">Fecha de Creación</h3>
+                    </div>
+                    <div class="card-value">{{ programa.fecha_creacion|date:"d/m/Y" }}</div>
+                    <div class="card-subtitle">programa establecido</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+                        <h3 class="card-title">Fecha de Registro</h3>
+                    </div>
+                    <div class="card-value">{{ programa.fecha_registro|date:"d/m/Y" }}</div>
+                    <div class="card-subtitle">en el sistema</div>
+                </div>
+                {% if programa.descripcion %}
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h3 class="card-title">Descripción del Programa</h3>
+                    </div>
+                    <div class="card-content">{{ programa.descripcion }}</div>
+                </div>
+                {% endif %}
+                {% if programa.competencias %}
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+                        <h3 class="card-title">Competencias a Desarrollar</h3>
+                    </div>
+                    <div class="card-content">{{ programa.competencias }}</div>
+                </div>
+                {% endif %}
+                {% if programa.perfil_egreso %}
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+                        <h3 class="card-title">Perfil de Egreso</h3>
+                    </div>
+                    <div class="card-content">{{ programa.perfil_egreso }}</div>
+                </div>
+                {% endif %}
+                {% if programa.requisitos_ingreso %}
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="bi bi-list-check"></i>
+                        </div>
+                        <h3 class="card-title">Requisitos de Ingreso</h3>
+                    </div>
+                    <div class="card-content">{{ programa.requisitos_ingreso }}</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="courses-section">
+                <div class="courses-header">
+                    <h2 class="courses-title">
+                        <div class="courses-title-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        Cursos del Programa
+                    </h2>
+                    <div class="course-count">{{ cursos|length }} cursos</div>
+                </div>
+
+                {% if cursos %}
+                <div class="courses-grid">
+                    {% for curso in cursos %}
+                    <div class="course-card">
+                        <h4 class="course-title">{{ curso.nombre }}</h4>
+                        <div class="course-code">
+                            <i class="bi bi-hash"></i>{{ curso.codigo }}
+                        </div>
+                        {% if curso.descripcion %}
+                        <p class="course-description">{{ curso.descripcion|truncatewords:15 }}</p>
+                        {% endif %}
+                        <div class="course-meta">
+                            <div class="course-date">
+                                <i class="bi bi-calendar3"></i>
+                                {% if curso.fecha_inicio %}
+                                    {{ curso.fecha_inicio|date:"M Y" }}
+                                {% else %}
+                                    Por definir
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-book empty-icon"></i>
+                    <h3 class="empty-title">No hay cursos registrados</h3>
+                    <p class="empty-text">Este programa aún no tiene cursos asociados</p>
+                    <button class="btn-add-course">
+                        <i class="bi bi-plus-circle"></i>Agregar Primer Curso
+                    </button>
+                </div>
+                {% endif %}

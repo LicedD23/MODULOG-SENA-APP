@@ -147,13 +147,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin:index' %}">
-                    <i class="fas fa-cog me-2"></i>Panel Admin
+                <a class="nav-link" href="{% url 'aprendices:lista_cursos' %}">
+                    <i class="fas fa-cog me-2"></i>Cursos
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'programas:lista_programas' %}">
                     <i class="fas fa-cog me-2"></i>Programas de Formación
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">
+                    <i class="fas fa-cog me-2"></i>Panel Admin
                 </a>
             </li>
         </div>
@@ -182,13 +187,13 @@
                         <th>Descripcion</th>
                         <th>Centro Formación</th>
                         <th>Regional</th>
-                        <th>Acciones</th> <!-- Nueva columna para acciones -->
+                        <th>Acciones</th> 
                     </tr>
                 </thead>
                 <tbody>
                     {% for programa in lista_programas %}
                     <tr>
-                        <td>{{ programa.codigo }}</td>
+                        <td><strong><a href = "programa/{{ programa.id }}">{{ programa.codigo }}</a></strong></td>
                         <td>{{ programa.nombre }}</td>
                         <td>{{ programa.nivel_formacion }}</td>
                         <td>{{ programa.modalidad }}</td>

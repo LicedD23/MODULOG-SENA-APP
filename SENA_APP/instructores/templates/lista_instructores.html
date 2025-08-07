@@ -152,13 +152,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin:index' %}">
-                    <i class="fas fa-cog me-2"></i>Panel Admin
+                <a class="nav-link" href="{% url 'aprendices:lista_cursos' %}">
+                    <i class="fas fa-cog me-2"></i>Cursos
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'programas:lista_programas' %}">
                     <i class="fas fa-cog me-2"></i>Programas de Formación
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">
+                    <i class="fas fa-cog me-2"></i>Panel Admin
                 </a>
             </li>
         </div>
@@ -195,7 +200,7 @@
                 <tbody>
                     {% for Instructor in lista_instructores %}
                     <tr>
-                        <td>{{ Instructor.documento_identidad }}</td>
+                        <td><strong><a href ="instructor/{{ Instructor.id }}">{{ Instructor.documento_identidad }}</a></strong></td>
                         <td>{{ Instructor.tipo_documento }}</td>
                         <td>{{ Instructor.nombre }} {{ Instructor.apellido }}</td>
                         <td><a href="mailto:{{ Instructor.correo }}">{{ Instructor.correo }}</a></td>
