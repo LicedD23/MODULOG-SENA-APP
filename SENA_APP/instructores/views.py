@@ -1,7 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.urls import reverse_lazy
 from .models import Instructor
 from django.shortcuts import get_object_or_404
+
+from instructores.forms import InstructorForm
+from django.views import generic
+from django.contrib import messages
+from django.views.generic.edit import FormView
+
 
 # Create your views here.
 def instructores(request):
@@ -27,7 +34,29 @@ def detalle_instructor(request, instructor_id):
     
     return HttpResponse(template.render(context, request))
 
+class InstructorFormView(FormView):
+    template_name ='Crear_instructor.html'
+    form_class=InstructorForm
+    success_url = "../instructores/"
+    
 
+def form_valid(self,form):
+    instructor=form.save()
+    
+    #Agregar mensaje de exito
+    messages.success(
+        self.request,
+        f'El instructor {instructor.nombre} {instructor.apellido} ha sido registrado exitosamente.',
+    )
+    
+    return super().form_valid(form)
+
+def form_invalid(self, form):
+        messages.error(
+            self.request, 
+            'Por favor, corrija los errores en el formulario.'
+        )
+        return super().form_invalid(form)
 
 
 
