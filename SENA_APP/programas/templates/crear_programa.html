@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENA - Sistema de Gestión de Aprendices</title>
+    <title>SENA - Crear Programa de Formación</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -18,7 +18,7 @@
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        
+       
         * {
             margin: 0;
             padding: 0;
@@ -217,6 +217,11 @@
             padding: 10px;
         }
 
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            padding: 10px;
+        }
+
         .col-md-12 {
             flex: 0 0 100%;
             padding: 10px;
@@ -335,9 +340,38 @@
             font-size: 1.1rem;
         }
 
+        /* Alert Styles */
+        .alert {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .alert h6 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .alert ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .alert li {
+            margin-bottom: 5px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .col-md-6 {
+            .col-md-6,
+            .col-md-4 {
                 flex: 0 0 100%;
             }
 
@@ -375,15 +409,14 @@
         <div class="container">
             <div class="header-title">
                 <h1>
-                    <i class="fas fa-graduation-cap"></i>
-                    SENA - Agregar Aprendiz
+                    <i class="fas fa-project-diagram"></i>
+                    SENA - Agregar Programa de Formación
                 </h1>
                 <p>
                     <i class="fas fa-list"></i>
                     SENA
                 </p>
             </div>
-            
             <div class="nav-container">
                 <ul class="nav-list">
                     <li class="nav-item">
@@ -420,14 +453,15 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="main-content">
             <div class="form-container">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-user-plus"></i>
-                            Agregar Nuevo Aprendiz
+                            <i class="fas fa-plus-circle"></i>
+                            Agregar Nuevo Programa de Formación
                         </h3>
                     </div>
                     <div class="card-body">
@@ -437,20 +471,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
-                                            Documento de Identidad
+                                            Código del Programa
                                             <span class="required">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="documento_identidad" placeholder="Ingrese el número de documento" required>
+                                        <input type="text" class="form-control" name="codigo" placeholder="Ingrese el código del programa" required>
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
-                                            Nombre
+                                            Nombre del Programa
                                             <span class="required">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre" required>
+                                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre del programa" required>
                                     </div>
                                 </div>
                             </div>
@@ -459,17 +492,32 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
-                                            Apellido
+                                            Nivel de Formación
                                             <span class="required">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="apellido" placeholder="Ingrese el apellido" required>
+                                        <select class="form-control" name="nivel_formacion" required>
+                                            <option value="">Seleccione nivel de formación</option>
+                                            <option value="TEC">Técnico</option>
+                                            <option value="TGL">Tecnólogo</option>
+                                            <option value="ESP">Especialización Tecnológica</option>
+                                            <option value="COM">Complementaria</option>
+                                        </select>
                                     </div>
                                 </div>
-                                
+                               
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Teléfono</label>
-                                        <input type="tel" class="form-control" name="telefono" placeholder="Ingrese el teléfono">
+                                        <label class="form-label">
+                                            Modalidad
+                                            <span class="required">*</span>
+                                        </label>
+                                        <select class="form-control" name="modalidad" required>
+                                            <option value="">Seleccione modalidad</option>
+                                            <option value="PRE">Presencial</option>
+                                            <option value="VIR">Virtual</option>
+                                            <option value="MIX">Mixta</option>
+                                            <option value="DIS">A Distancia</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -477,18 +525,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" name="correo" placeholder="ejemplo@correo.com">
+                                        <label class="form-label">
+                                            Duración en Meses
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" name="duracion_meses" placeholder="Ingrese duración en meses" min="1" required>
                                     </div>
                                 </div>
-                                
+                               
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
-                                            Fecha de Nacimiento
+                                            Duración en Horas
                                             <span class="required">*</span>
                                         </label>
-                                        <input type="date" class="form-control" name="fecha_nacimiento" required>
+                                        <input type="number" class="form-control" name="duracion_horas" placeholder="Ingrese duración en horas" min="1" required>
                                     </div>
                                 </div>
                             </div>
@@ -496,26 +547,124 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Ciudad</label>
-                                        <input type="text" class="form-control" name="ciudad" placeholder="Ingrese la ciudad">
+                                        <label class="form-label">
+                                            Descripción del Programa
+                                            <span class="required">*</span>
+                                        </label>
+                                        <textarea class="form-control" name="descripcion" placeholder="Ingrese la descripción del programa" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Competencias a Desarrollar
+                                            <span class="required">*</span>
+                                        </label>
+                                        <textarea class="form-control" name="competencias" placeholder="Ingrese las competencias a desarrollar" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Perfil de Egreso
+                                            <span class="required">*</span>
+                                        </label>
+                                        <textarea class="form-control" name="perfil_egreso" placeholder="Ingrese el perfil de egreso" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Requisitos de Ingreso
+                                            <span class="required">*</span>
+                                        </label>
+                                        <textarea class="form-control" name="requisitos_ingreso" placeholder="Ingrese los requisitos de ingreso" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Centro de Formación
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="centro_formacion" placeholder="Ingrese el centro de formación" required>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Regional
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="regional" placeholder="Ingrese la regional" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Estado
+                                            <span class="required">*</span>
+                                        </label>
+                                        <select class="form-control" name="estado" required>
+                                            <option value="">Seleccione estado</option>
+                                            <option value="ACT">Activo</option>
+                                            <option value="INA">Inactivo</option>
+                                            <option value="SUS">Suspendido</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Fecha de Creación
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="date" class="form-control" name="fecha_creacion" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Fecha de Registro
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="datetime-local" class="form-control" name="fecha_registro" required>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="button-group">
-                                <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-secondary">
+                                <a href="{% url 'programas:lista_programas' %}" class="btn btn-secondary">
                                     <i class="fas fa-times"></i>
                                     Cancelar
                                 </a>
-                                <button "{% url 'aprendices:crear_aprendiz' %}" type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i>
-                                    Guardar Aprendiz
+                                    Guardar Programa
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
-                
+            
                 <div class="info-section">
                     <p class="info-text">
                         <i class="fas fa-info-circle"></i>
@@ -525,20 +674,23 @@
             </div>
         </div>
     </div>
+    
     {% if form.errors %}
-    <div class="alert alert-danger">
-        <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrija los siguientes errores:</h6>
-        <ul class="mb-0">
-        {% for field in form %}
-            {% for error in field.errors %}
-                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+    <div class="container">
+        <div class="alert alert-danger">
+            <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrija los siguientes errores:</h6>
+            <ul class="mb-0">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-        </ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
-{% endif %}
+    {% endif %}
 </body>
 </html>

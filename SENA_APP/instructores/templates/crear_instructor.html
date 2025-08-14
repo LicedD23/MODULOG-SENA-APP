@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENA - Sistema de Gestión de Aprendices</title>
+    <title>SENA - Crear Instructor</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -18,12 +18,13 @@
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        
+       
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -32,11 +33,13 @@
             padding: 0;
         }
 
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
+
 
         /* Header Styles */
         .header {
@@ -49,6 +52,7 @@
             width: 100%;
         }
 
+
         .header::before {
             content: '';
             position: absolute;
@@ -60,15 +64,18 @@
             opacity: 0.3;
         }
 
+
         .header .container {
             position: relative;
             z-index: 1;
         }
 
+
         .header-title {
             text-align: center;
             margin-bottom: 2rem;
         }
+
 
         .header h1 {
             font-size: 2.5rem;
@@ -81,6 +88,7 @@
             gap: 1rem;
         }
 
+
         .header p {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -89,6 +97,7 @@
             justify-content: center;
             gap: 0.5rem;
         }
+
 
         .nav-container {
             background: rgba(255, 255, 255, 0.1);
@@ -99,6 +108,7 @@
             display: flex;
             justify-content: center;
         }
+
 
         .nav-list {
             list-style: none;
@@ -111,9 +121,11 @@
             padding: 0;
         }
 
+
         .nav-item {
             display: inline-block;
         }
+
 
         .nav-link {
             color: white !important;
@@ -129,6 +141,7 @@
             white-space: nowrap;
         }
 
+
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
@@ -136,9 +149,11 @@
             color: white !important;
         }
 
+
         .nav-link i {
             margin-right: 0.5rem;
         }
+
 
         /* Main Content */
         .main-content {
@@ -147,10 +162,12 @@
             padding: 3rem 0;
         }
 
+
         .form-container {
             max-width: 800px;
             width: 100%;
         }
+
 
         /* Card Styles */
         .card {
@@ -162,6 +179,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+
         .card-header {
             background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
             color: white;
@@ -169,6 +187,7 @@
             position: relative;
             overflow: hidden;
         }
+
 
         .card-header::before {
             content: '';
@@ -181,10 +200,12 @@
             animation: shimmer 2s infinite;
         }
 
+
         @keyframes shimmer {
             0% { left: -100%; }
             100% { left: 100%; }
         }
+
 
         .card-title {
             font-size: 1.5rem;
@@ -196,14 +217,17 @@
             z-index: 2;
         }
 
+
         .card-title i {
             margin-right: 12px;
             font-size: 1.3rem;
         }
 
+
         .card-body {
             padding: 40px 30px;
         }
+
 
         /* Form Styles */
         .row {
@@ -212,20 +236,30 @@
             margin: -10px;
         }
 
+
         .col-md-6 {
             flex: 0 0 50%;
             padding: 10px;
         }
+
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            padding: 10px;
+        }
+
 
         .col-md-12 {
             flex: 0 0 100%;
             padding: 10px;
         }
 
+
         .form-group {
             position: relative;
             margin-bottom: 20px;
         }
+
 
         .form-label {
             display: block;
@@ -235,10 +269,12 @@
             font-size: 0.95rem;
         }
 
+
         .required {
             color: #e74c3c;
             margin-left: 3px;
         }
+
 
         .form-control {
             width: 100%;
@@ -251,6 +287,7 @@
             position: relative;
         }
 
+
         .form-control:focus {
             outline: none;
             border-color: #4facfe;
@@ -259,9 +296,11 @@
             transform: translateY(-2px);
         }
 
+
         .form-control:hover {
             border-color: #a8d8ff;
         }
+
 
         /* Button Styles */
         .button-group {
@@ -271,6 +310,7 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
+
 
         .btn {
             padding: 15px 30px;
@@ -287,9 +327,11 @@
             overflow: hidden;
         }
 
+
         .btn i {
             margin-right: 8px;
         }
+
 
         .btn-primary {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -297,10 +339,12 @@
             box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
         }
 
+
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
         }
+
 
         .btn-secondary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -308,10 +352,12 @@
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
         }
 
+
         .btn-secondary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
         }
+
 
         /* Info Section */
         .info-section {
@@ -322,6 +368,7 @@
             border-left: 4px solid #4facfe;
         }
 
+
         .info-text {
             color: #2980b9;
             font-size: 0.95rem;
@@ -330,16 +377,20 @@
             margin: 0;
         }
 
+
         .info-text i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
 
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .col-md-6 {
+            .col-md-6,
+            .col-md-4 {
                 flex: 0 0 100%;
             }
+
 
             .header h1 {
                 font-size: 2rem;
@@ -347,21 +398,25 @@
                 gap: 0.5rem;
             }
 
+
             .nav-list {
                 flex-direction: column;
                 align-items: center;
                 gap: 0.25rem;
             }
 
+
             .nav-link {
                 width: 100%;
                 justify-content: center;
             }
 
+
             .button-group {
                 justify-content: center;
                 flex-direction: column;
             }
+
 
             .btn {
                 width: 100%;
@@ -371,19 +426,20 @@
     </style>
 </head>
 <body>
+    <!-- Header Section - Full Width -->
     <div class="header">
         <div class="container">
             <div class="header-title">
                 <h1>
                     <i class="fas fa-graduation-cap"></i>
-                    SENA - Agregar Aprendiz
+                    SENA - Agregar Instructor
                 </h1>
                 <p>
                     <i class="fas fa-list"></i>
                     SENA
                 </p>
             </div>
-            
+           
             <div class="nav-container">
                 <ul class="nav-list">
                     <li class="nav-item">
@@ -427,7 +483,7 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-user-plus"></i>
-                            Agregar Nuevo Aprendiz
+                            Agregar Nuevo Instructor
                         </h3>
                     </div>
                     <div class="card-body">
@@ -437,13 +493,30 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
+                                            Tipo de Documento
+                                        </label>
+                                        <select class="form-control" name="tipo_documento">
+                                            <option value="">Seleccione tipo de documento</option>
+                                            <option value="CC">Cédula de Ciudadanía</option>
+                                            <option value="CE">Cédula de Extranjería</option>
+                                            <option value="TI">Tarjeta de Identidad</option>
+                                            <option value="PA">Pasaporte</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
                                             Documento de Identidad
                                             <span class="required">*</span>
                                         </label>
                                         <input type="text" class="form-control" name="documento_identidad" placeholder="Ingrese el número de documento" required>
                                     </div>
                                 </div>
-                                
+                            </div>
+
+
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
@@ -453,9 +526,6 @@
                                         <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre" required>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">
@@ -465,24 +535,111 @@
                                         <input type="text" class="form-control" name="apellido" placeholder="Ingrese el apellido" required>
                                     </div>
                                 </div>
-                                
+                            </div>
+
+
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Teléfono</label>
                                         <input type="tel" class="form-control" name="telefono" placeholder="Ingrese el teléfono">
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
                                         <input type="email" class="form-control" name="correo" placeholder="ejemplo@correo.com">
                                     </div>
                                 </div>
-                                
+                            </div>
+
+
+                            <div class="row">
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Ciudad</label>
+                                        <input type="text" class="form-control" name="ciudad" placeholder="Ingrese la ciudad">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Dirección
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="direccion" placeholder="Ingrese la dirección" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Nivel Educativo</label>
+                                        <select class="form-control" name="nivel_educativo">
+                                            <option value="">Seleccione nivel educativo</option>
+                                            <option value="TEC">Técnico</option>
+                                            <option value="TGL">Tecnólogo</option>
+                                            <option value="PRE">Profesional</option>
+                                            <option value="ESP">Especialización</option>
+                                            <option value="MAE">Maestría</option>
+                                            <option value="DOC">Doctorado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Especialidad
+                                            <span class="required">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="especialidad" placeholder="Ingrese la especialidad" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Años de Experiencia</label>
+                                        <input type="number" class="form-control" name="anos_experiencia" placeholder="Ingrese años de experiencia" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Estado
+                                            <span class="required">*</span>
+                                        </label>
+                                        <select class="form-control" name="activo" required>
+                                            <option value="">Seleccione estado</option>
+                                            <option value="true">Activo</option>
+                                            <option value="false">Inactivo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Fecha de Vinculación</label>
+                                        <input type="date" class="form-control" name="fecha_vinculacion">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Fecha de Registro</label>
+                                        <input type="date" class="form-control" name="fecha_registro">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">
                                             Fecha de Nacimiento
@@ -493,29 +650,21 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Ciudad</label>
-                                        <input type="text" class="form-control" name="ciudad" placeholder="Ingrese la ciudad">
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="button-group">
-                                <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-secondary">
+                                <a href="{% url 'instructores:lista_instructores' %}" class="btn btn-secondary">
                                     <i class="fas fa-times"></i>
                                     Cancelar
                                 </a>
-                                <button "{% url 'aprendices:crear_aprendiz' %}" type="submit" class="btn btn-primary">
+                                <button "{% url 'instructores:crear_instructor' %}" type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i>
-                                    Guardar Aprendiz
-                                </button>
+                                    Guardar Instructor
+                            
                             </div>
                         </form>
                     </div>
                 </div>
-                
+            
                 <div class="info-section">
                     <p class="info-text">
                         <i class="fas fa-info-circle"></i>
