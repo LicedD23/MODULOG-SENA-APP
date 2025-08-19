@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENA - Lista Asistencia</title>
+    <style>
+        :root {
+            --sena-primary: #2563eb;
+            --sena-secondary: #475569;
+            --sena-light: #f1f5f9;
+            --sena-dark: #1e293b;
+            --sena-accent: #3b82f6;
+            --sena-success: #059669;
+            --sena-gradient: linear-gradient(135deg, #2563eb 0%, #475569 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: var(--sena-gradient);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="30" cy="30" r="4"/></g></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            display: inline-block;
+        }
+
+        .nav-link {
+            color: white !important;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.7rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: white !important;
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .search-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+        
+        .search-row {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+        
+        .search-field {
+            flex: 1;
+        }
+        
+        .search-field label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .search-field input,
+        .search-field select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .search-field input:focus,
+        .search-field select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .lookup-field {
+            position: relative;
+        }
+        
+        .lookup-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .search-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+        }
+        
+        .search-btn, .new-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .search-btn {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .new-btn {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .search-btn:hover, .new-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .asistencias-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .asistencias-table thead {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .asistencias-table th,
+        .asistencias-table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .asistencias-table th {
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .asistencias-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .asistencias-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        .asistencias-table tbody tr:nth-child(even):hover {
+            background-color: #f1f5f9;
+        }
+        
+        .estado-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .estado-si {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .estado-no {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .observaciones-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+        }
+        
+        .obs-positiva {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .obs-neutral {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .obs-negativa {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .table-footer {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+        
+        .no-data i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-project-diagram"></i>
+                    SENA - Lista Asistencia
+                </h1>
+                <p>
+                    <i class="fas fa-list"></i>
+                    SENA
+                </p>
+            </div>
+            <div class="nav-container">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">
+                            <i class="fas fa-home"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
+                            <i class="fas fa-users"></i>Aprendices
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
+                            <i class="fas fa-chalkboard-teacher"></i>Instructores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:lista_cursos' %}">
+                            <i class="fas fa-book"></i>Cursos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'programas:lista_programas' %}">
+                            <i class="fas fa-project-diagram"></i>Programas de Formación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">
+                            <i class="fas fa-cog"></i>Panel Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-container">
+            <div class="search-row">
+                <!-- Consultar Fichas de Caracterización -->
+                <div class="search-field">
+                    <label for="fichas_caracterizacion">Consultar Fichas de Caracterización:</label>
+                    <div class="lookup-field">
+                        <input type="text" id="fichas_caracterizacion" name="fichas_caracterizacion" placeholder="Buscar por ficha...">
+                        <button type="button" class="lookup-icon">🔍</button>
+                    </div>
+                </div>
+
+                <!-- Consultar Aprendiz -->
+                <div class="search-field">
+                    <label for="aprendiz_search">Consultar Aprendiz:</label>
+                    <div class="lookup-field">
+                        <input type="text" id="aprendiz_search" name="aprendiz_search" placeholder="Buscar por nombre...">
+                        <button type="button" class="lookup-icon">🔍</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-buttons">
+                <button type="button" class="search-btn" onclick="buscarAsistencias()">Buscar</button>
+                <a href="{% url 'asistencias:crear_asistencia' %}" class="new-btn">Nuevo Registro</a>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="asistencias-table">
+                    <thead>
+                        <tr>
+                            <th>Programa</th>
+                            <th>Aprendiz</th>
+                            <th>Instructor</th>
+                            <th>Cantidad Horas</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Observaciones</th>
+                            <th>Asistió</th>
+                        </tr>
+                    </thead>
+                    <tbody id="asistencias-tbody">
+                        <!-- Los datos se cargarán desde la base de datos -->
+                        <tr>
+                            <td colspan="8" class="no-data">
+                                📄<br>
+                                No hay registros de asistencia disponibles.<br>
+                                Realiza una búsqueda para ver los resultados.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                <span id="table-footer-text">Mostrando 0 registros de 0 asistencias totales</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        function buscarAsistencias() {
+            const fichaValue = document.getElementById('fichas_caracterizacion').value;
+            const aprendizValue = document.getElementById('aprendiz_search').value;
+            
+            console.log('Buscando asistencias...');
+            console.log('Ficha:', fichaValue);
+            console.log('Aprendiz:', aprendizValue);
+            
+            // Simulate search
+            if (fichaValue || aprendizValue) {
+                alert('Búsqueda realizada. En Django aquí filtraríamos los resultados.');
+                // Aquí conectarías con tu vista de Django para obtener los datos filtrados
+            } else {
+                alert('Ingrese al menos un criterio de búsqueda.');
+            }
+        }
+
+        // Lookup functionality
+        document.querySelectorAll('.lookup-icon').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const fieldName = input.getAttribute('name');
+                
+                // Aquí conectarías con tu base de datos para obtener las opciones
+                if (fieldName === 'fichas_caracterizacion') {
+                    // En Django, esto sería una consulta a tu modelo de Fichas
+                    console.log('Buscar fichas de caracterización desde la BD');
+                } else if (fieldName === 'aprendiz_search') {
+                    // En Django, esto sería una consulta a tu modelo de Aprendices
+                    console.log('Buscar aprendices desde la BD');
+                }
+            });
+        });
+
+        // Enter key to search
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarAsistencias();
+            }
+        });
+
+        // Auto-filter as you type (demo)
+        let searchTimeout;
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (this.value.length > 2) {
+                        // Simulate real-time filtering
+                        console.log('Filtrando en tiempo real:', this.value);
+                        // Aquí harías una petición AJAX a Django
+                    }
+                }, 500);
+            });
+        });
+
+        // Función para actualizar la tabla con datos desde Django
+        function actualizarTablaAsistencias(data) {
+            const tbody = document.getElementById('asistencias-tbody');
+            const footerText = document.getElementById('table-footer-text');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="no-data">
+                            📄<br>
+                            No se encontraron registros con los criterios de búsqueda.
+                        </td>
+                    </tr>
+                `;
+                footerText.textContent = 'Mostrando 0 registros de 0 asistencias totales';
+                return;
+            }
+            
+            tbody.innerHTML = data.map(asistencia => `
+                <tr>
+                    <td>${asistencia.programa}</td>
+                    <td>${asistencia.aprendiz}</td>
+                    <td>${asistencia.instructor}</td>
+                    <td>${asistencia.cantidad_horas}</td>
+                    <td>${asistencia.fecha_inicio}</td>
+                    <td>${asistencia.fecha_fin}</td>
+                    <td><span class="observaciones-badge ${getObservacionClass(asistencia.observaciones)}">${asistencia.observaciones}</span></td>
+                    <td><span class="estado-badge ${asistencia.asistio ? 'estado-si' : 'estado-no'}">${asistencia.asistio ? 'Sí' : 'No'}</span></td>
+                </tr>
+            `).join('');
+            
+            footerText.textContent = `Mostrando ${data.length} registros`;
+        }
+        
+        function getObservacionClass(observacion) {
+            const obs = observacion.toLowerCase();
+            if (obs.includes('excelente') || obs.includes('sobresaliente') || obs.includes('activamente') || obs.includes('puntual') || obs.includes('buen')) {
+                return 'obs-positiva';
+            } else if (obs.includes('falta') || obs.includes('sin justificar')) {
+                return 'obs-negativa';
+            } else {
+                return 'obs-neutral';
+            }
+        }
+    </script>
+</body>
+</html>
