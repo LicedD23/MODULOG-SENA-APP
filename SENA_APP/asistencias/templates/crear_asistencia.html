@@ -270,6 +270,16 @@
             color: #991b1b;
             border: 1px solid #dc2626;
         }
+
+        .error-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error-list li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -326,114 +336,27 @@
             </div>
         </div>
     </div>
-    <!-- Main Container -->
+
     <div class="container">
         <h2 class="form-title">Formulario de Asistencia</h2>
         
-        <!-- Messages will be handled by Django -->
-        <div class="messages" style="display: none;" id="successMessage">
-            <div class="message success">
-                La asistencia ha sido registrada exitosamente.
+        <!-- CORRECCIÓN: Mostrar mensajes de Django -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-        
-        <div class="form-container">
-            <form id="asistenciaForm" method="post">
-                {% csrf_token %}
-                
-                <!-- Código del Programa -->
-                <div class="form-group">
-                    <label for="codigo">Código del programa:</label>
-                    <select id="codigo" name="codigo" required>
-                        <option value="">---------</option>
-                        
-                        {% for programa in programas %}
-                        <option value="{{ programa.codigo }}">{{ programa.codigo }} - {{ programa.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="help-text">Ingrese el codigo del programa de formacion.</div>
-                </div>
-                <div class="form-group">
-                    <label for="aprendiz">Nombre del aprendiz:</label>
-                    <select id="aprendiz" name="aprendiz" required>
-                        <option value="">---------</option>
-                        
-                        {% for aprendiz in aprendices %}
-                        <option value="{{ aprendiz.id }}">{{ aprendiz.nombre_completo }} - {{ aprendiz.documento }}</option>
-                        {% endfor %} 
-                    </select>
-                    <div class="help-text">Ingrese el nombre del aprendiz.</div>
-                </div>
+        {% endif %}
 
-                <!-- Nombre del Instructor -->
-                <div class="form-group">
-                    <label for="instructor">Nombre del instructor:</label>
-                    <select id="instructor" name="instructor" required>
-                        <option value="">---------</option>
-
-                        {% for instructor in instructores %}
-                        <option value="{{ instructor.id }}">{{ instructor.nombre_completo }} - {{ instructor.especialidad }}</option>
-                        {% endfor %} 
-                    </select>
-                    <div class="help-text">Ingrese el nombre del instructor que dicto la clase.</div>
-                </div>
-
-                <!-- Cantidad de horas -->
-                <div class="form-group">
-                    <label for="cantidad_horas">Cantidad de horas:</label>
-                    <input type="number" id="cantidad_horas" name="cantidad_horas" min="0" max="24" placeholder="Ej: 8" required>
-                    <div class="help-text">Ingrese la cantidad de horas de asistencia del aprendiz.</div>
-                </div>
-
-                <!-- Observaciones -->
-                <div class="form-group">
-                    <label for="observaciones">Observaciones:</label>
-                    <textarea id="observaciones" name="observaciones" placeholder="Ingrese observaciones sobre la asistencia del aprendiz (opcional)"></textarea>
-                    <div class="help-text">Ingrese las observaciones del aprendiz.</div>
-                </div>
-
-                <!-- Fecha Inicio -->
-                <div class="form-group">
-                    <label for="fecha_inicio">Fecha de inicio:</label>
-                    <div class="date-input-group">
-                        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
-                    </div>
-                    <div class="help-text">Ingrese la fecha de inicio de la clase.</div>
-                </div>
-
-                <!-- Fecha Fin -->
-                <div class="form-group">
-                    <label for="fecha_fin">Fecha de fin:</label>
-                    <div class="date-input-group">
-                        <input type="date" id="fecha_fin" name="fecha_fin" required>
-                    </div>
-                    <div class="help-text">Ingrese la fecha de fin de la clase.</div>
-                </div>
-
-                <!-- Estado -->
-                <div class="form-group">
-                    <label for="estado">Estado:</label>
-                    <select id="estado" name="estado" required>
-                        <option value="">---------</option>
-                        <option value="SI">Asistió</option>
-                        <option value="NO">No Asistió</option>
-                    </select>
-                    <div class="help-text">Ingrese el estado de la asistencia.</div>
-                </div>
-
-                <!-- Submit Button -->
-                <button href"{% url 'asistencias:lista_asistencias' %}" class="submit-btn">Registrar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Django Error Messages -->
-    {% if form.errors %}
-    <div class="container">
+        <!-- CORRECCIÓN: Mostrar errores del formulario -->
+        {% if form.errors %}
         <div class="messages">
             <div class="message error">
                 <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrija los siguientes errores:</h6>
-                <ul class="mb-0">
+                <ul class="error-list">
                 {% for field in form %}
                     {% for error in field.errors %}
                         <li><strong>{{ field.label }}:</strong> {{ error }}</li>
@@ -445,116 +368,65 @@
                 </ul>
             </div>
         </div>
-    </div>
-    {% endif %}
+        {% endif %}
+    
+        <div class="form-container">
+            <form id="asistenciaForm" method="post" novalidate>
+                {% csrf_token %}
+                
+                <!-- CORRECCIÓN: Usar nombres consistentes (minúscula) -->
+                <div class="form-group">
+                    <label for="{{ form.codigo.id_for_label }}">{{ form.codigo.label }}</label>
+                    {{ form.codigo }}
+                    <div class="help-text">{{ form.codigo.help_text }}</div>
+                </div>
 
-    <script>
-        // Set today's date as default
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('fecha_inicio').value = today;
-            document.getElementById('fecha_fin').value = today;
-            
-            // Cargar datos iniciales desde Django si es necesario
-            cargarProgramas();
-            cargarAprendices();
-            cargarInstructores();
-        });
-        
-        // Funciones para cargar datos desde Django
-        function cargarProgramas() {
-            // Esta función se conectará con tu vista de Django
-            console.log('Cargando programas desde la base de datos...');
-            // Ejemplo: fetch('/api/programas/').then(response => response.json()).then(data => { ... });
-        }
-        
-        function cargarAprendices() {
-            // Esta función se conectará con tu vista de Django
-            console.log('Cargando aprendices desde la base de datos...');
-        }
-        
-        function cargarInstructores() {
-            // Esta función se conectará con tu vista de Django
-            console.log('Cargando instructores desde la base de datos...');
-        }
-        
-        // Auto-fill related fields when program is selected
-        document.getElementById('codigo').addEventListener('change', function() {
-            const selectedProgram = this.value;
-            console.log('Programa seleccionado:', selectedProgram);
-            
-            // Filtrar aprendices e instructores por programa
-            if (selectedProgram) {
-                filtrarAprendicesPorPrograma(selectedProgram);
-                filtrarInstructoresPorPrograma(selectedProgram);
-            }
-        });
-        
-        function filtrarAprendicesPorPrograma(programaId) {
-            // Aquí harías una llamada AJAX para obtener aprendices del programa seleccionado
-            console.log('Filtrando aprendices para programa:', programaId);
-        }
-        
-        function filtrarInstructoresPorPrograma(programaId) {
-            // Aquí harías una llamada AJAX para obtener instructores del programa seleccionado
-            console.log('Filtrando instructores para programa:', programaId);
-        }
-        
-        // Form submission handling
-        document.getElementById('asistenciaForm').addEventListener('submit', function(e) {
-            // El formulario se enviará normalmente a Django
-            // Solo agregamos validación del lado cliente
-            
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.style.borderColor = '#dc2626';
-                    isValid = false;
-                } else {
-                    field.style.borderColor = '#e5e7eb';
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('Por favor, complete todos los campos obligatorios.');
-            }
-        });
-        
-        // Validation for dropdowns
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', function() {
-                this.style.borderColor = this.value ? '#10b981' : '#e5e7eb';
-            });
-        });
-        
-        // Interactive form validation
-        document.querySelectorAll('input, select, textarea').forEach(field => {
-            field.addEventListener('blur', function() {
-                if (this.hasAttribute('required') && !this.value.trim()) {
-                    this.style.borderColor = '#dc2626';
-                } else {
-                    this.style.borderColor = '#e5e7eb';
-                }
-            });
-            
-            field.addEventListener('input', function() {
-                this.style.borderColor = '#e5e7eb';
-            });
-        });
-        
-        // Validar que fecha_fin no sea anterior a fecha_inicio
-        document.getElementById('fecha_fin').addEventListener('change', function() {
-            const fechaInicio = document.getElementById('fecha_inicio').value;
-            const fechaFin = this.value;
-            
-            if (fechaInicio && fechaFin && fechaFin < fechaInicio) {
-                alert('La fecha de fin no puede ser anterior a la fecha de inicio.');
-                this.value = fechaInicio;
-            }
-        });
-    </script>
+                <div class="form-group">
+                    <label for="{{ form.aprendiz.id_for_label }}">{{ form.aprendiz.label }}</label>
+                    {{ form.aprendiz }}
+                    <div class="help-text">{{ form.aprendiz.help_text }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.instructor.id_for_label }}">{{ form.instructor.label }}</label>
+                    {{ form.instructor }}
+                    <div class="help-text">{{ form.instructor.help_text }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.cantidad_horas.id_for_label }}">{{ form.cantidad_horas.label }}</label>
+                    {{ form.cantidad_horas }}
+                    <div class="help-text">{{ form.cantidad_horas.help_text }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.observaciones.id_for_label }}">{{ form.observaciones.label }}</label>
+                    {{ form.observaciones }}
+                    <div class="help-text">{{ form.observaciones.help_text }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.fecha_inicio.id_for_label }}">{{ form.fecha_inicio.label }}</label>
+                    {{ form.fecha_inicio }}
+                    <div class="help-text">{{ form.fecha_inicio.help_text }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.fecha_fin.id_for_label }}">{{ form.fecha_fin.label }}</label>
+                    {{ form.fecha_fin }}
+                    <div class="help-text">{{ form.fecha_fin.help_text }}</div>
+                </div>
+
+                <!-- CORRECCIÓN: Cambiar Estado por estado -->
+                <div class="form-group">
+                    <label for="{{ form.estado.id_for_label }}">{{ form.estado.label }}</label>
+                    {{ form.estado }}
+                    <div class="help-text">{{ form.estado.help_text }}</div>
+                </div>
+
+                <button type="submit" class="submit-btn">Registrar</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -400,21 +400,28 @@
         <!-- Search Section -->
         <div class="search-container">
             <div class="search-row">
-                <!-- Consultar Fichas de Caracterización -->
+                
                 <div class="search-field">
                     <label for="fichas_caracterizacion">Consultar Fichas de Caracterización:</label>
                     <div class="lookup-field">
-                        <input type="text" id="fichas_caracterizacion" name="fichas_caracterizacion" placeholder="Buscar por ficha...">
-                        <button type="button" class="lookup-icon">🔍</button>
+                    <select id="fichas_caracterizacion" name="fichas_caracterizacion">
+                    <option value="">Selecciona una ficha...</option>
+                    {% for programa in lista_programas %}
+                    <option value="{{ programa.codigo }}">{{ programa.codigo }} - {{ programa.nombre }}</option>
+                    {% endfor %}
+        </select>
                     </div>
                 </div>
-
-                <!-- Consultar Aprendiz -->
                 <div class="search-field">
                     <label for="aprendiz_search">Consultar Aprendiz:</label>
                     <div class="lookup-field">
-                        <input type="text" id="aprendiz_search" name="aprendiz_search" placeholder="Buscar por nombre...">
-                        <button type="button" class="lookup-icon">🔍</button>
+                        <select id="aprendiz_search" name="aprendiz_search">
+                        <option value="">Selecciona un aprendiz...</option>
+                        {% for aprendiz in lista_aprendices %}
+                        <option value="{{ aprendiz.id }}">{{ aprendiz.nombre_completo }} - {{ aprendiz.documento }}</option>
+                        {% endfor %}
+                        </select>
+                
                     </div>
                 </div>
             </div>
@@ -441,126 +448,28 @@
                             <th>Asistió</th>
                         </tr>
                     </thead>
+
                     <tbody id="asistencias-tbody">
-                        <!-- Los datos se cargarán desde la base de datos -->
+                        {% for asistencia in lista_asistencias %}
                         <tr>
-                            <td colspan="8" class="no-data">
-                                📄<br>
-                                No hay registros de asistencia disponibles.<br>
-                                Realiza una búsqueda para ver los resultados.
-                            </td>
+                            <td>{{ asistencia.Codigo }} - {{ asistencia.nombre }}</td>
+                            <td><a href="{% url 'aprendices:detalle_aprendiz' asistencia.aprendiz.id %}">{{ asistencia.aprendiz.nombre_completo }}</a></td>
+                            <td>{{ asistencia.instructor.nombre_completo }}</td>
+                            <td>{{ asistencia.cantidad_horas }}</td>
+                            <td>{{ asistencia.fecha_inicio|date:"d/m/Y" }}</td>
+                            <td>{{ asistencia.fecha_fin|date:"d/m/Y" }}</td>
+                            <td class="observaciones-badge obs-{{ asistencia.observaciones|lower }}">{{ asistencia.observaciones }}</td>
+                            <td class="estado-badge estado-{{ asistencia.asistio|lower }}">{{ asistencia.asistio|yesno:"Sí,No" }}</td>
                         </tr>
+                        {% endfor %}
+
                     </tbody>
                 </table>
             </div>
             <div class="table-footer">
-                <span id="table-footer-text">Mostrando 0 registros de 0 asistencias totales</span>
             </div>
         </div>
     </div>
 
-    <script>
-        // Search functionality
-        function buscarAsistencias() {
-            const fichaValue = document.getElementById('fichas_caracterizacion').value;
-            const aprendizValue = document.getElementById('aprendiz_search').value;
-            
-            console.log('Buscando asistencias...');
-            console.log('Ficha:', fichaValue);
-            console.log('Aprendiz:', aprendizValue);
-            
-            // Simulate search
-            if (fichaValue || aprendizValue) {
-                alert('Búsqueda realizada. En Django aquí filtraríamos los resultados.');
-                // Aquí conectarías con tu vista de Django para obtener los datos filtrados
-            } else {
-                alert('Ingrese al menos un criterio de búsqueda.');
-            }
-        }
-
-        // Lookup functionality
-        document.querySelectorAll('.lookup-icon').forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.previousElementSibling;
-                const fieldName = input.getAttribute('name');
-                
-                // Aquí conectarías con tu base de datos para obtener las opciones
-                if (fieldName === 'fichas_caracterizacion') {
-                    // En Django, esto sería una consulta a tu modelo de Fichas
-                    console.log('Buscar fichas de caracterización desde la BD');
-                } else if (fieldName === 'aprendiz_search') {
-                    // En Django, esto sería una consulta a tu modelo de Aprendices
-                    console.log('Buscar aprendices desde la BD');
-                }
-            });
-        });
-
-        // Enter key to search
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                buscarAsistencias();
-            }
-        });
-
-        // Auto-filter as you type (demo)
-        let searchTimeout;
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    if (this.value.length > 2) {
-                        // Simulate real-time filtering
-                        console.log('Filtrando en tiempo real:', this.value);
-                        // Aquí harías una petición AJAX a Django
-                    }
-                }, 500);
-            });
-        });
-
-        // Función para actualizar la tabla con datos desde Django
-        function actualizarTablaAsistencias(data) {
-            const tbody = document.getElementById('asistencias-tbody');
-            const footerText = document.getElementById('table-footer-text');
-            
-            if (data.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="8" class="no-data">
-                            📄<br>
-                            No se encontraron registros con los criterios de búsqueda.
-                        </td>
-                    </tr>
-                `;
-                footerText.textContent = 'Mostrando 0 registros de 0 asistencias totales';
-                return;
-            }
-            
-            tbody.innerHTML = data.map(asistencia => `
-                <tr>
-                    <td>${asistencia.programa}</td>
-                    <td>${asistencia.aprendiz}</td>
-                    <td>${asistencia.instructor}</td>
-                    <td>${asistencia.cantidad_horas}</td>
-                    <td>${asistencia.fecha_inicio}</td>
-                    <td>${asistencia.fecha_fin}</td>
-                    <td><span class="observaciones-badge ${getObservacionClass(asistencia.observaciones)}">${asistencia.observaciones}</span></td>
-                    <td><span class="estado-badge ${asistencia.asistio ? 'estado-si' : 'estado-no'}">${asistencia.asistio ? 'Sí' : 'No'}</span></td>
-                </tr>
-            `).join('');
-            
-            footerText.textContent = `Mostrando ${data.length} registros`;
-        }
-        
-        function getObservacionClass(observacion) {
-            const obs = observacion.toLowerCase();
-            if (obs.includes('excelente') || obs.includes('sobresaliente') || obs.includes('activamente') || obs.includes('puntual') || obs.includes('buen')) {
-                return 'obs-positiva';
-            } else if (obs.includes('falta') || obs.includes('sin justificar')) {
-                return 'obs-negativa';
-            } else {
-                return 'obs-neutral';
-            }
-        }
-    </script>
 </body>
 </html>

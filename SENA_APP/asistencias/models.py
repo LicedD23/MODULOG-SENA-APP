@@ -7,7 +7,7 @@ class Asistencia(models.Model):
         ('SI','asistio'),
         ('NO','no asistio'),
     ]
-    Codigo= models.ForeignKey('programas.Programa', on_delete=models.CASCADE ,verbose_name="Código del Programa")
+    codigo= models.ForeignKey('programas.Programa', on_delete=models.CASCADE ,verbose_name="Código del Programa")
     aprendiz= models.ForeignKey('aprendices.Aprendiz', on_delete=models.CASCADE, verbose_name="Aprendiz")
     instructor= models.ForeignKey('instructores.Instructor', on_delete=models.CASCADE, verbose_name="Instructor",help_text="Instructor que dicto la clase")
     cantidad_horas= models.PositiveIntegerField(verbose_name="Horas de Asistencia" , help_text="Cantidad de horas de asistencia del aprendiz")
@@ -17,7 +17,7 @@ class Asistencia(models.Model):
     Estado= models.CharField(max_length=2, choices=ESTADO_CHOICES, default='SI', verbose_name="Estado")
     
     def __str__(self):
-        return f"{self.Codigo} - {self.aprendiz}"
+        return f"{self.codigo} - {self.aprendiz}"
     
     class Meta:
         verbose_name = "Asistencia"
