@@ -402,15 +402,6 @@
             <form method="get" action="{% url 'asistencias:buscar_asistencia' %}">
                 <div class="search-row">
                     <div class="search-field">
-                        <label for="fichas_caracterizacion">Consultar Fichas de Caracterización:</label>
-                        <select id="fichas_caracterizacion" name="fichas_caracterizacion">
-                            <option value="">Selecciona una ficha...</option>
-                            {% for programa in lista_programas %}
-                            <option value="{{ programa.codigo }}">{{ programa.codigo }} - {{ programa.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="search-field">
                         <label for="aprendiz_search">Consultar Aprendiz:</label>
                         <select id="aprendiz_search" name="aprendiz_search">
                             <option value="">Selecciona un aprendiz...</option>
@@ -423,6 +414,7 @@
                 
                 <div class="search-buttons">
                     <button type="submit" class="search-btn">Buscar</button>
+                    <a href="{% url 'asistencias:buscar_asistencia' %}" class="new-btn">Limpiar</a>
                     <a href="{% url 'asistencias:crear_asistencia' %}" class="new-btn">Nuevo Registro</a>
                 </div>
             </form>
@@ -448,7 +440,7 @@
                     <tbody id="asistencias-tbody">
                         {% for asistencia in lista_asistencias %}
                         <tr>
-                            <td>{{ asistencia.Codigo }} - {{ asistencia.nombre }}</td>
+                            <td>{{ asistencia.codigo }} - {{ asistencia.nombre }}</td>
                             <td><a href="{% url 'aprendices:detalle_aprendiz' asistencia.aprendiz.id %}">{{ asistencia.aprendiz.nombre_completo }}</a></td>
                             <td>{{ asistencia.instructor.nombre_completo }}</td>
                             <td>{{ asistencia.cantidad_horas }}</td>
