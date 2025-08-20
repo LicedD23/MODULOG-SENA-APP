@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.template import loader
 
 from instructores.models import Instructor
@@ -65,5 +66,30 @@ def crear_asistencia(request):
         'lista_instructores': lista_instructores,
     }
     return HttpResponse (template.render(context, request))
+
+def buscar_asistencia(request):
+    lista_asistencias = Asistencia.objects.all()
+    lista_aprendices = Aprendiz.objects.all()
+    lista_programas = Programa.objects.all()
+
+    # Obtener los parámetros de búsqueda
+    programa_id = request.GET.get('fichas_caracterizacion')
+    aprendiz_id = request.GET.get('aprendiz_search')
+
+    # Filtrar por programa
+    if programa_id:
+        lista_asistencias = lista_asistencias.filter(codigo_id=programa_id)
+
+    # Filtrar por aprendiz
+    if aprendiz_id:
+        lista_asistencias = lista_asistencias.filter(aprendiz_id=aprendiz_id)
+
+    context = {
+        "lista_asistencias": lista_asistencias,
+        "total_asistencias": lista_asistencias.count(),
+        "lista_aprendices": lista_aprendices,
+        "lista_programas": lista_programas,
+    }
+    return render(request, "lista_asistencias.html", context)
 
 

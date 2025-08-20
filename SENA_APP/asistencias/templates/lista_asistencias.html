@@ -398,38 +398,34 @@
     <!-- Main Container -->
     <div class="container">
         <!-- Search Section -->
-        <div class="search-container">
-            <div class="search-row">
-                
-                <div class="search-field">
-                    <label for="fichas_caracterizacion">Consultar Fichas de Caracterización:</label>
-                    <div class="lookup-field">
-                    <select id="fichas_caracterizacion" name="fichas_caracterizacion">
-                    <option value="">Selecciona una ficha...</option>
-                    {% for programa in lista_programas %}
-                    <option value="{{ programa.codigo }}">{{ programa.codigo }} - {{ programa.nombre }}</option>
-                    {% endfor %}
-        </select>
-                    </div>
-                </div>
-                <div class="search-field">
-                    <label for="aprendiz_search">Consultar Aprendiz:</label>
-                    <div class="lookup-field">
-                        <select id="aprendiz_search" name="aprendiz_search">
-                        <option value="">Selecciona un aprendiz...</option>
-                        {% for aprendiz in lista_aprendices %}
-                        <option value="{{ aprendiz.id }}">{{ aprendiz.nombre_completo }} - {{ aprendiz.documento }}</option>
-                        {% endfor %}
+         <div class="search-container">
+            <form method="get" action="{% url 'asistencias:buscar_asistencia' %}">
+                <div class="search-row">
+                    <div class="search-field">
+                        <label for="fichas_caracterizacion">Consultar Fichas de Caracterización:</label>
+                        <select id="fichas_caracterizacion" name="fichas_caracterizacion">
+                            <option value="">Selecciona una ficha...</option>
+                            {% for programa in lista_programas %}
+                            <option value="{{ programa.codigo }}">{{ programa.codigo }} - {{ programa.nombre }}</option>
+                            {% endfor %}
                         </select>
-                
+                    </div>
+                    <div class="search-field">
+                        <label for="aprendiz_search">Consultar Aprendiz:</label>
+                        <select id="aprendiz_search" name="aprendiz_search">
+                            <option value="">Selecciona un aprendiz...</option>
+                            {% for aprendiz in lista_aprendices %}
+                            <option value="{{ aprendiz.id }}">{{ aprendiz.nombre_completo }} - {{ aprendiz.documento }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
-            </div>
-
-            <div class="search-buttons">
-                <button type="button" class="search-btn" onclick="buscarAsistencias()">Buscar</button>
-                <a href="{% url 'asistencias:crear_asistencia' %}" class="new-btn">Nuevo Registro</a>
-            </div>
+                
+                <div class="search-buttons">
+                    <button type="submit" class="search-btn">Buscar</button>
+                    <a href="{% url 'asistencias:crear_asistencia' %}" class="new-btn">Nuevo Registro</a>
+                </div>
+            </form>
         </div>
 
         <!-- Table Section -->
@@ -460,6 +456,10 @@
                             <td>{{ asistencia.fecha_fin|date:"d/m/Y" }}</td>
                             <td class="observaciones-badge obs-{{ asistencia.observaciones|lower }}">{{ asistencia.observaciones }}</td>
                             <td class="estado-badge estado-{{ asistencia.asistio|lower }}">{{ asistencia.asistio|yesno:"Sí,No" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="no-data">No se encontraron asistencias.</td>
                         </tr>
                         {% endfor %}
 
